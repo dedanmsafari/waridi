@@ -23,7 +23,6 @@ const UserProvider = ({ children }) => {
         createUserDocumentfromAuth(user);
       }
       setCurrentUser(user);
-      console.log(user);
     });
 
     return unsubscribe;
