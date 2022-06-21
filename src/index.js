@@ -9,6 +9,7 @@ import UserProvider from "../src/contexts/user.context";
 import ProductsProvider from "./contexts/products.context";
 
 import reportWebVitals from "./reportWebVitals";
+import CartDropdownProvider from "./contexts/cartDropdown.context";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -16,7 +17,9 @@ root.render(
     <BrowserRouter>
       <UserProvider>
         <ProductsProvider>
-          <App />
+          <CartDropdownProvider>
+            <App />
+          </CartDropdownProvider>
         </ProductsProvider>
       </UserProvider>
     </BrowserRouter>
