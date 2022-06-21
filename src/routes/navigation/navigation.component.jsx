@@ -2,14 +2,18 @@ import React, { useContext } from "react";
 import { Outlet, Link } from "react-router-dom";
 
 import { ReactComponent as Logo } from "../../assets/crown.svg";
+import CartIcon from "../../components/cart-icon/cart-icon.component";
+import CartDropdown from "../../components/cart-dropdown/cart-dropdown.component";
 
 import { UserContext } from "../../contexts/user.context";
 import { signOutUser } from "../../utils/firebase/firebase.utils";
 
 import "./navigation.styles.scss";
+import { CartDropdownContext } from "../../contexts/cartDropdown.context";
 
 export default function Navigation() {
   const { currentUser } = useContext(UserContext);
+  const { openDropdown, setOpenDropdown } = useContext(CartDropdownContext);
 
   return (
     <>
@@ -36,10 +40,11 @@ export default function Navigation() {
               SIGN IN
             </Link>
           )}
-          <Link className="nav-link" to="/cart">
-            CART
-          </Link>
+          <div onClick={setOpenDropdown}>
+            <CartIcon />
+          </div>
         </div>
+        {openDropdown ? <CartDropdown /> : null}
       </div>
       <Outlet />
     </>
