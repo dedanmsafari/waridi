@@ -1,15 +1,17 @@
-import React, { useState, createContext } from "react";
+import React, { useState, createContext, useEffect } from "react";
 
 export const CartDropdownContext = createContext({
   openDropdown: false,
   setOpenDropdown: () => null,
   cartItems: [],
   addItemToCart: () => null,
+  cartTotal: 0,
 });
 
 const CartDropdownProvider = ({ children }) => {
   const [openDropdown, setOpenDropdown] = useState(false);
   const [cartItems, setCartItems] = useState([]);
+  const [cartTotal, setCartTotal] = useState(0);
 
   const addItemToCart = (product) => {
     const existingItem = cartItems.find((item) => item.id === product.id);
@@ -30,13 +32,21 @@ const CartDropdownProvider = ({ children }) => {
     }
   };
 
-  console.log(cartItems);
+  useEffect(() => {
+    const getItems = (cartCount, cartItem) => {
+      return cartCount + cartItem.quantity;
+    };
+    const totalCartItems = cartItems.reduce(getItems, 0);
+
+    setCartTotal(totalCartItems);
+  }, [cartItems]);
 
   const value = {
     openDropdown,
     setOpenDropdown: () => setOpenDropdown(!openDropdown),
     addItemToCart,
     cartItems,
+    cartTotal,
   };
   return (
     <CartDropdownContext.Provider value={value}>

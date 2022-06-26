@@ -13,7 +13,8 @@ import { CartDropdownContext } from "../../contexts/cartDropdown.context";
 
 export default function Navigation() {
   const { currentUser } = useContext(UserContext);
-  const { openDropdown, setOpenDropdown } = useContext(CartDropdownContext);
+  const { openDropdown, setOpenDropdown, cartTotal } =
+    useContext(CartDropdownContext);
 
   return (
     <>
@@ -41,7 +42,7 @@ export default function Navigation() {
             </Link>
           )}
           <div onClick={setOpenDropdown}>
-            <CartIcon />
+            <CartIcon cartTotal={cartTotal} />
           </div>
         </div>
         {openDropdown ? <CartDropdown /> : null}
