@@ -9,7 +9,16 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 
-import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  collection,
+  writeBatch,
+  query,
+  getDocs,
+} from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDhXvJ5x03-t9aFG75s1_3vbR0XaaGVmc8",
@@ -23,6 +32,39 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 
 const db = getFirestore();
+
+export const addCategoriesAndDocuments = async (
+  collectionKey,
+  objectsToAdd
+) => {
+  const collectionRef = collection(db, collectionKey);
+  const batch = writeBatch(db);
+
+  objectsToAdd.forEach((obj) => {
+    const DocRef = doc(collectionRef, obj.title.toLowerCase());
+    batch.set(DocRef, obj);
+  });
+
+  await batch.commit();
+  console.log("done");
+};
+
+export const getCategoriesAndDocuments = async () => {
+  const collectionRef = collection(db, "categories");
+
+  const q = query(collectionRef);
+  const querySnapshot = await getDocs(q);
+
+  const toObject = (acc, docSnapshot) => {
+    const { title, items } = docSnapshot.data();
+    acc[title.toLowerCase()] = items;
+    return acc;
+  };
+
+  const categoryMap = querySnapshot.docs.reduce(toObject, {});
+
+  return categoryMap;
+};
 
 export const createUserDocumentfromAuth = async (auth, additionalData) => {
   if (!auth) return;
