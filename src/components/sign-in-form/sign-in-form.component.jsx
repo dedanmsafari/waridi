@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Button from "../button/button.component";
+import Button, { BUTTON_TYPE_CLASSES } from "../button/button.component";
 import FormInput from "../form-input/form-input.component";
 import {
   signInAuthWithEmailAndPassword,
@@ -75,7 +75,7 @@ export default function SignInForm() {
           <Button type="submit">SIGN IN</Button>
           <Button
             type="button"
-            buttonType="google"
+            buttonType={BUTTON_TYPE_CLASSES.google}
             onClick={handleSignInWithGoogle}
           >
             GOOGLE SIGN IN
