@@ -1,15 +1,13 @@
 import React from "react";
 
-import { ReactComponent as Shopping } from "../../assets/shopping-bag.svg";
-
-import "./cart-icon.styles.scss";
+import { CartContainer, ItemCount, ShoppingIcon } from "./cart-icon.styles.jsx";
 
 const CartIcon = ({ cartTotal }) => {
   return (
-    <div className="cart-icon-container">
-      <Shopping className="shopping-icon" />
-      <span className="item-count">{cartTotal}</span>
-    </div>
+    <CartContainer>
+      <ShoppingIcon className="shopping-icon" />
+      <ItemCount className="item-count">{cartTotal}</ItemCount>
+    </CartContainer>
   );
 };
 
