@@ -24,6 +24,7 @@ const CartAction = {
   OPEN_CART_DROPDOWN: "OPEN_CART_DROPDOWN",
   GET_TOTAL_CART_ITEMS: "GET_TOTAL_CART_ITEMS",
   GET_TOTAL_PRICE: "GET_TOTAL_PRICE",
+  UPDATE_CART_REDUCER: "UPDATE_CART_REDUCER",
 };
 
 const cartReducer = (state, action) => {
@@ -93,25 +94,12 @@ const cartReducer = (state, action) => {
         ...state,
         openDropdown: !state.openDropdown,
       };
-    case CartAction.GET_TOTAL_CART_ITEMS:
-      const getItems = (cartCount, cartItem) => {
-        return cartCount + cartItem.quantity;
-      };
-      const totalCartItems = state.cartItems.reduce(getItems, 0);
+
+    case CartAction.UPDATE_CART_REDUCER:
       return {
         ...state,
-        cartTotal: totalCartItems,
-      };
-
-    case CartAction.GET_TOTAL_PRICE:
-      const getTotal = (cartCount, cartItem) => {
-        return cartCount + cartItem.quantity * cartItem.price;
-      };
-      const updatedTotal = state.cartItems.reduce(getTotal, 0);
-
-      return {
-        ...state,
-        totalCost: updatedTotal,
+        totalCost: payload.updatedTotal,
+        cartTotal: payload.totalCartItems,
       };
 
     default:
@@ -120,9 +108,8 @@ const cartReducer = (state, action) => {
 };
 
 const CartDropdownProvider = ({ children }) => {
-  const [{ openDropdown, cartItems, cartTotal, totalCost }, dispatch] =
-    useReducer(cartReducer, INITIAL_STATE);
-
+  const [state, dispatch] = useReducer(cartReducer, INITIAL_STATE);
+  const { openDropdown, cartItems, cartTotal, totalCost } = state;
   const addItemToCart = (payload) => {
     dispatch({ type: CartAction.ADD_ITEM_TO_CART, payload: payload });
   };
@@ -139,12 +126,28 @@ const CartDropdownProvider = ({ children }) => {
     dispatch({ type: CartAction.OPEN_CART_DROPDOWN });
   };
 
-  useEffect(() => {
-    dispatch({ type: CartAction.GET_TOTAL_CART_ITEMS });
-  }, [cartItems]);
+  const updateCartItemsReducer = (state) => {
+    const getTotal = (cartCount, cartItem) => {
+      return cartCount + cartItem.quantity * cartItem.price;
+    };
+    const updatedTotal = state.cartItems.reduce(getTotal, 0);
+
+    const getItems = (cartCount, cartItem) => {
+      return cartCount + cartItem.quantity;
+    };
+    const totalCartItems = state.cartItems.reduce(getItems, 0);
+    const payload = {
+      updatedTotal,
+      totalCartItems,
+    };
+    return {
+      type: CartAction.UPDATE_CART_REDUCER,
+      payload: payload,
+    };
+  };
 
   useEffect(() => {
-    dispatch({ type: CartAction.GET_TOTAL_PRICE });
+    dispatch(updateCartItemsReducer(state));
   }, [cartItems]);
 
   const value = {
