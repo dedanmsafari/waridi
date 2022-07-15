@@ -52,13 +52,9 @@ const cartReducer = (state, action) => {
       }
 
     case CartAction.REMOVE_FROM_CART:
-      const savedProducts = state.cartItems.filter(
-        (cartItem) => cartItem !== payload
-      );
-
       return {
         ...state,
-        cartItems: savedProducts,
+        cartItems: payload.remainingProducts,
       };
 
     case CartAction.DECREASE_FROM_CART:
@@ -115,7 +111,12 @@ const CartDropdownProvider = ({ children }) => {
   };
 
   const removeFromCart = (payload) => {
-    dispatch({ type: CartAction.REMOVE_FROM_CART, payload: payload });
+    const remainingProducts = cartItems.filter(
+      (cartItem) => cartItem !== payload
+    );
+    const leftProducts = { remainingProducts };
+
+    dispatch({ type: CartAction.REMOVE_FROM_CART, payload: leftProducts });
   };
 
   const decreaseFromCart = (payload) => {
