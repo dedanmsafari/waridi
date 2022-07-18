@@ -31,5 +31,5 @@ export const CartItems = styled.div`
 
 export const EmptyMessage = styled.span`
   font-size: 18px;
-  margin: 50px auto;
+  margin: auto;
 `;
