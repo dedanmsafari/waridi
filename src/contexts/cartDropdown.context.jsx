@@ -1,5 +1,5 @@
 import React, { useState, createContext, useEffect, useReducer } from "react";
-
+import { createAction } from "../utils/reducer/reducer.utils";
 export const CartDropdownContext = createContext({
   openDropdown: false,
   setOpenDropdown: () => null,
@@ -107,7 +107,7 @@ const CartDropdownProvider = ({ children }) => {
   const [state, dispatch] = useReducer(cartReducer, INITIAL_STATE);
   const { openDropdown, cartItems, cartTotal, totalCost } = state;
   const addItemToCart = (payload) => {
-    dispatch({ type: CartAction.ADD_ITEM_TO_CART, payload: payload });
+    dispatch(createAction(CartAction.ADD_ITEM_TO_CART, payload));
   };
 
   const removeFromCart = (payload) => {
@@ -116,15 +116,15 @@ const CartDropdownProvider = ({ children }) => {
     );
     const leftProducts = { remainingProducts };
 
-    dispatch({ type: CartAction.REMOVE_FROM_CART, payload: leftProducts });
+    dispatch(createAction(CartAction.REMOVE_FROM_CART, leftProducts));
   };
 
   const decreaseFromCart = (payload) => {
-    dispatch({ type: CartAction.DECREASE_FROM_CART, payload: payload });
+    dispatch(createAction(CartAction.DECREASE_FROM_CART, payload));
   };
 
   const setOpenDropdown = () => {
-    dispatch({ type: CartAction.OPEN_CART_DROPDOWN });
+    dispatch(createAction(CartAction.OPEN_CART_DROPDOWN));
   };
 
   const updateCartItemsReducer = (state) => {
@@ -138,13 +138,10 @@ const CartDropdownProvider = ({ children }) => {
     };
     const totalCartItems = state.cartItems.reduce(getItems, 0);
     const payload = {
-      updatedTotal,
-      totalCartItems,
+      updatedTotal, //CartTotal
+      totalCartItems, //CartCount.
     };
-    return {
-      type: CartAction.UPDATE_CART_REDUCER,
-      payload: payload,
-    };
+    return createAction(CartAction.UPDATE_CART_REDUCER, payload);
   };
 
   useEffect(() => {
