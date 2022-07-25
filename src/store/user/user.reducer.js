@@ -1,9 +1,7 @@
+import { UserActionType } from "./user.actionTypes";
+
 const INITIAL_STATE = {
   currentUser: null,
-};
-
-const UserActionType = {
-  SET_CURRENT_USER: "SET_CURRENT_USER",
 };
 
 export const userReducer = (state = INITIAL_STATE, action) => {
