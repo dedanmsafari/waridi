@@ -1,6 +1,5 @@
-import React, { useContext } from "react";
-import { useSelector } from "react-redux";
-
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Outlet } from "react-router-dom";
 
 import { ReactComponent as Logo } from "../../assets/crown.svg";
@@ -16,13 +15,20 @@ import {
   NavLinksContainer,
   NavigationContainer,
 } from "./navigation.styles";
-import { CartDropdownContext } from "../../contexts/cartDropdown.context";
+
+import { setOpenDropdown } from "../../store/cart/cart.actions";
+import {
+  selectCartTotal,
+  selectOpenDropDown,
+} from "../../store/cart/cart.selectors";
 
 export default function Navigation() {
   const currentUser = useSelector(selectCurrentUser);
-  const { openDropdown, setOpenDropdown, cartTotal } =
-    useContext(CartDropdownContext);
+  const openDropdown = useSelector(selectOpenDropDown);
+  const cartTotal = useSelector(selectCartTotal);
+  const dispatch = useDispatch();
 
+  const toggleDropdown = () => dispatch(setOpenDropdown());
   return (
     <>
       <NavigationContainer>
@@ -41,7 +47,7 @@ export default function Navigation() {
           ) : (
             <NavLink to="/auth">SIGN IN</NavLink>
           )}
-          <div onClick={setOpenDropdown}>
+          <div onClick={toggleDropdown}>
             <CartIcon cartTotal={cartTotal} />
           </div>
         </NavLinksContainer>
