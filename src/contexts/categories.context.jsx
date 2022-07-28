@@ -2,7 +2,7 @@ import React, { createContext, useState, useEffect } from "react";
 import { getCategoriesAndDocuments } from "../utils/firebase/firebase.utils";
 
 export const CategoriesContext = createContext({
-  categories: {},
+  categoriesMap: {},
 });
 
 const CategoriesProvider = ({ children }) => {
