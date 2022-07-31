@@ -1,12 +1,6 @@
 import React, { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
-import {
-  onAuthStateChangedListener,
-  createUserDocumentfromAuth,
-  getCurrentUser,
-} from "./utils/firebase/firebase.utils";
-
-import { setCurrentUser } from "./store/user/user.actions";
+import { getCurrentSession, setCurrentUser } from "./store/user/user.actions";
 import { useDispatch } from "react-redux";
 
 import Navigation from "./routes/navigation/navigation.component";
@@ -20,7 +14,7 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getCurrentUser().then((user) => console.log(user));
+    dispatch(getCurrentSession());
   }, [dispatch]);
 
   return (
