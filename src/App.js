@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
-import { getCurrentSession, setCurrentUser } from "./store/user/user.actions";
+import { checkUserSession, setCurrentUser } from "./store/user/user.actions";
 import { useDispatch } from "react-redux";
 
 import Navigation from "./routes/navigation/navigation.component";
@@ -14,7 +14,7 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getCurrentSession());
+    dispatch(checkUserSession());
   }, [dispatch]);
 
   return (
