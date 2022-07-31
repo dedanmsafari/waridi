@@ -12,9 +12,10 @@ export const setCurrentUser = (user) =>
   SIGN_IN_SUCCESS: "user/SIGN_IN_SUCCESS",
   SIGN_IN_FAILED: "USER/SIGN_IN_FAILED",
   */
-export const signInGoogle = () => createAction(UserActionType.SIGN_IN_GOOGLE);
+export const signInGoogleStart = () =>
+  createAction(UserActionType.SIGN_IN_GOOGLE);
 
-export const signInWithEmailAndPassword = (email, password) =>
+export const signInWithEmailAndPasswordStart = (email, password) =>
   createAction(UserActionType.SIGN_IN_EMAIL_PASSWORD, { email, password });
 
 export const signInSuccess = (user) =>
@@ -23,5 +24,5 @@ export const signInSuccess = (user) =>
 export const signInFailed = (error) =>
   createAction(UserActionType.SIGN_IN_FAILED, error);
 
-export const getCurrentSession = () =>
-  createAction(UserActionType.GET_CURRENT_SESSION);
+export const checkUserSession = () =>
+  createAction(UserActionType.CHECK_USER_SESSION);
