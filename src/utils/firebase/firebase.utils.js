@@ -83,7 +83,7 @@ export const createUserDocumentfromAuth = async (auth, additionalData) => {
 
   //otherwise just return the reference to the user document
 
-  return userDocRef;
+  return userSnapshot;
 };
 
 const googleProvider = new GoogleAuthProvider();
