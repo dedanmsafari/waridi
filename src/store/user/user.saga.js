@@ -40,7 +40,7 @@ export function* signUpAuthCreationWithEmailAndPassword({
   displayName,
 }) {
   try {
-    const userAuth = yield call(
+    const { userAuth } = yield call(
       createAuthWithEmailAndPassword,
       email,
       password
