@@ -18,6 +18,13 @@ export const signInGoogleStart = () =>
 export const signInWithEmailAndPasswordStart = (email, password) =>
   createAction(UserActionType.SIGN_IN_EMAIL_PASSWORD, { email, password });
 
+export const signUpWithEmailAndPasswordStart = (email, password, displayName) =>
+  createAction(UserActionType.SIGN_UP_EMAIL_PASSWORD, {
+    email,
+    password,
+    displayName,
+  });
+
 export const signInSuccess = (user) =>
   createAction(UserActionType.SIGN_IN_SUCCESS, user);
 
