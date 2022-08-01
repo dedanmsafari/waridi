@@ -11,21 +11,24 @@ import { UserActionType } from "./user.actionTypes";
 
 export function* signInAuthWithGoogle() {
   try {
-    const userAuth = yield call(signInWithGooglePopup);
-    yield call(userDocCreationfromAuthAsync(userAuth));
+    const { userAuth } = yield call(signInWithGooglePopup);
+    yield call(userDocCreationfromAuthAsync, userAuth);
   } catch (error) {
     yield put(signInFailed(error));
   }
 }
 
-export function* signInAuthCreationWithEmailAndPassword({ email, password }) {
+export function* signInAuthCreationWithEmailAndPassword({
+  payload: { email, password },
+}) {
   try {
-    const userAuth = yield call(
+    const { userAuth } = yield call(
       signInAuthWithEmailAndPassword,
       email,
       password
     );
-    yield put(signInSuccess(userAuth));
+    yield call(userDocCreationfromAuthAsync, userAuth);
+    // yield put(signInSuccess(userAuth));
   } catch (error) {
     yield put(signInFailed(error));
   }
