@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import Button, { BUTTON_TYPE_CLASSES } from "../button/button.component";
 import FormInput from "../form-input/form-input.component";
 import {
@@ -7,7 +8,16 @@ import {
   createUserDocumentfromAuth,
 } from "../../utils/firebase/firebase.utils";
 
+import {
+  signInAuthCreationWithEmailAndPassword,
+  signInAuthWithGoogle,
+} from "../../store/user/user.saga";
+
 import "./sign-in-form.styles.scss";
+import {
+  signInGoogleStart,
+  signInWithEmailAndPasswordStart,
+} from "../../store/user/user.actions";
 
 const inputValues = {
   email: "",
@@ -16,19 +26,19 @@ const inputValues = {
 
 export default function SignInForm() {
   const [inputs, setInputs] = useState(inputValues);
-
+  const dispatch = useDispatch();
   const { email, password } = inputs;
 
   const clearForm = () => {
     setInputs(inputValues);
   };
-  const handleSignInWithGoogle = async () => {
-    await signInWithGooglePopup();
+  const handleSignInWithGoogle = () => {
+    dispatch(signInGoogleStart());
   };
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     try {
-      const { user } = await signInAuthWithEmailAndPassword(email, password);
+      dispatch(signInWithEmailAndPasswordStart(email, password));
 
       clearForm();
     } catch (error) {
