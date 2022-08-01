@@ -2,9 +2,51 @@ import { takeLatest, call, all, put } from "redux-saga/effects";
 import {
   createUserDocumentfromAuth,
   getCurrentUser,
+  createAuthWithEmailAndPassword,
+  signInAuthWithEmailAndPassword,
+  signInWithGooglePopup,
 } from "../../utils/firebase/firebase.utils";
 import { signInFailed, signInSuccess } from "./user.actions";
 import { UserActionType } from "./user.actionTypes";
+
+export function* signInAuthWithGoogle() {
+  try {
+    const userAuth = yield call(signInWithGooglePopup);
+    yield call(userDocCreationfromAuthAsync(userAuth));
+  } catch (error) {
+    yield put(signInFailed(error));
+  }
+}
+
+export function* signInAuthCreationWithEmailAndPassword({ email, password }) {
+  try {
+    const userAuth = yield call(
+      signInAuthWithEmailAndPassword,
+      email,
+      password
+    );
+    yield put(signInSuccess(userAuth));
+  } catch (error) {
+    yield put(signInFailed(error));
+  }
+}
+
+export function* signUpAuthCreationWithEmailAndPassword({
+  email,
+  password,
+  displayName,
+}) {
+  try {
+    const userAuth = yield call(
+      createAuthWithEmailAndPassword,
+      email,
+      password
+    );
+    yield call(createUserDocumentfromAuth, userAuth, displayName);
+  } catch (error) {
+    yield put(signInFailed(error));
+  }
+}
 
 export function* userDocCreationfromAuthAsync(userAuth, additionalData) {
   try {
@@ -40,6 +82,28 @@ export function* onCheckUserSession() {
   yield takeLatest(UserActionType.CHECK_USER_SESSION, isUserAuthenticated);
 }
 
+export function* onGoogleSignIn() {
+  yield takeLatest(UserActionType.SIGN_IN_GOOGLE, signInAuthWithGoogle);
+}
+
+export function* onEmailandPasswordSignIn() {
+  yield takeLatest(
+    UserActionType.SIGN_IN_EMAIL_PASSWORD,
+    signInAuthCreationWithEmailAndPassword
+  );
+}
+export function* onEmailandPasswordSignUp() {
+  yield takeLatest(
+    UserActionType.SIGN_UP_EMAIL_PASSWORD,
+    signUpAuthCreationWithEmailAndPassword
+  );
+}
+
 export function* userSaga() {
-  yield all([call(onCheckUserSession)]);
+  yield all([
+    call(onCheckUserSession),
+    call(onGoogleSignIn),
+    call(onEmailandPasswordSignIn),
+    call(onEmailandPasswordSignUp),
+  ]);
 }
