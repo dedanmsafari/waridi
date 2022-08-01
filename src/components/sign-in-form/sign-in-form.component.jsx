@@ -2,17 +2,6 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import Button, { BUTTON_TYPE_CLASSES } from "../button/button.component";
 import FormInput from "../form-input/form-input.component";
-import {
-  signInAuthWithEmailAndPassword,
-  signInWithGooglePopup,
-  createUserDocumentfromAuth,
-} from "../../utils/firebase/firebase.utils";
-
-import {
-  signInAuthCreationWithEmailAndPassword,
-  signInAuthWithGoogle,
-} from "../../store/user/user.saga";
-
 import "./sign-in-form.styles.scss";
 import {
   signInGoogleStart,
