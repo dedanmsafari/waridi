@@ -110,7 +110,7 @@ export function* onEmailandPasswordSignUp() {
 }
 
 export function* onUserSignOutStart() {
-  yield takeLatest(UserActionType.SIGN_OUT_START, signOutUser);
+  yield takeLatest(UserActionType.SIGN_OUT_START, signOutUserAsync);
 }
 export function* userSaga() {
   yield all([
