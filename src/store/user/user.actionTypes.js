@@ -5,4 +5,5 @@ export const UserActionType = {
   SIGN_IN_EMAIL_PASSWORD: "user/SIGN_IN_EMAIL_PASSWORD",
   SIGN_IN_SUCCESS: "user/SIGN_IN_SUCCESS",
   SIGN_IN_FAILED: "user/SIGN_IN_FAILED",
+  SIGN_OUT_START: "user/SIGN_OUT_START",
 };
