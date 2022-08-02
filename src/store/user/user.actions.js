@@ -15,6 +15,10 @@ export const setCurrentUser = (user) =>
 export const signInGoogleStart = () =>
   createAction(UserActionType.SIGN_IN_GOOGLE);
 
+export const signOutUserFromApp = () => {
+  createAction(UserActionType.SIGN_OUT_START);
+};
+
 export const signInWithEmailAndPasswordStart = (email, password) =>
   createAction(UserActionType.SIGN_IN_EMAIL_PASSWORD, { email, password });
 
