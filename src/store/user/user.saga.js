@@ -5,6 +5,7 @@ import {
   createAuthWithEmailAndPassword,
   signInAuthWithEmailAndPassword,
   signInWithGooglePopup,
+  signOutUser,
 } from "../../utils/firebase/firebase.utils";
 import { signInFailed, signInSuccess } from "./user.actions";
 import { UserActionType } from "./user.actionTypes";
@@ -13,6 +14,15 @@ export function* signInAuthWithGoogle() {
   try {
     const { userAuth } = yield call(signInWithGooglePopup);
     yield call(userDocCreationfromAuthAsync, userAuth);
+  } catch (error) {
+    yield put(signInFailed(error));
+  }
+}
+
+export function* signOutUserAsync() {
+  try {
+    const { user } = yield call(signOutUser);
+    yield call(userDocCreationfromAuthAsync, user);
   } catch (error) {
     yield put(signInFailed(error));
   }
@@ -99,11 +109,15 @@ export function* onEmailandPasswordSignUp() {
   );
 }
 
+export function* onUserSignOutStart() {
+  yield takeLatest(UserActionType.SIGN_OUT_START, signOutUser);
+}
 export function* userSaga() {
   yield all([
     call(onCheckUserSession),
     call(onGoogleSignIn),
     call(onEmailandPasswordSignIn),
     call(onEmailandPasswordSignUp),
+    call(onUserSignOutStart),
   ]);
 }
