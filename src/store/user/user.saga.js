@@ -28,16 +28,13 @@ export function* signInAuthCreationWithEmailAndPassword({
       password
     );
     yield call(userDocCreationfromAuthAsync, userAuth);
-    // yield put(signInSuccess(userAuth));
   } catch (error) {
     yield put(signInFailed(error));
   }
 }
 
 export function* signUpAuthCreationWithEmailAndPassword({
-  email,
-  password,
-  displayName,
+  payload: { email, password, displayName },
 }) {
   try {
     const { userAuth } = yield call(
@@ -45,7 +42,7 @@ export function* signUpAuthCreationWithEmailAndPassword({
       email,
       password
     );
-    yield call(createUserDocumentfromAuth, userAuth, displayName);
+    yield call(userDocCreationfromAuthAsync, userAuth, displayName);
   } catch (error) {
     yield put(signInFailed(error));
   }
