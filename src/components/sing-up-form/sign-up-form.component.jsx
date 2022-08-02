@@ -1,9 +1,5 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import {
-  userDocCreationfromAuthAsync,
-  authCreationwithEmailandPassword,
-} from "../../store/user/user.saga";
 
 import FormInput from "../form-input/form-input.component";
 import Button from "../button/button.component";
