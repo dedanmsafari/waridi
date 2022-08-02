@@ -37,10 +37,6 @@ export default function SignUpForm() {
     }
     try {
       dispatch(signUpWithEmailAndPasswordStart(email, password, displayName));
-      // const { user } = authCreationwithEmailandPassword(email, password);
-      // userDocCreationfromAuthAsync(user, {
-      //   displayName,
-      // });
       resetFormFields();
     } catch (error) {
       if (error.code === "auth/email-already-in-use") {
