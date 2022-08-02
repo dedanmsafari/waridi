@@ -7,7 +7,6 @@ import CartIcon from "../../components/cart-icon/cart-icon.component";
 import CartDropdown from "../../components/cart-dropdown/cart-dropdown.component";
 
 import { selectCurrentUser } from "../../store/user/user.selectors";
-import { signOutUser } from "../../utils/firebase/firebase.utils";
 
 import {
   LogoContainer,
@@ -21,6 +20,7 @@ import {
   selectCartTotal,
   selectOpenDropDown,
 } from "../../store/cart/cart.selectors";
+import { signOutUserFromApp } from "../../store/user/user.actions";
 
 export default function Navigation() {
   const currentUser = useSelector(selectCurrentUser);
@@ -28,6 +28,9 @@ export default function Navigation() {
   const cartTotal = useSelector(selectCartTotal);
   const dispatch = useDispatch();
 
+  const handleSignOut = () => {
+    dispatch(signOutUserFromApp());
+  };
   const toggleDropdown = () => dispatch(setOpenDropdown());
   return (
     <>
@@ -40,7 +43,7 @@ export default function Navigation() {
         <NavLinksContainer>
           <NavLink to="/shop">SHOP</NavLink>
           {currentUser ? (
-            <NavLink as="span" onClick={() => signOutUser()}>
+            <NavLink as="span" onClick={handleSignOut}>
               {" "}
               SIGN OUT
             </NavLink>
