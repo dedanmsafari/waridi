@@ -21,8 +21,14 @@ export const signUpWithEmailAndPasswordStart = (email, password, displayName) =>
     displayName,
   });
 
+export const signUpSuccess = (user, additionalDetails) =>
+  createAction(UserActionType.SIGN_UP_SUCCESS, { user, additionalDetails });
+
 export const signInSuccess = (user) =>
   createAction(UserActionType.SIGN_IN_SUCCESS, user);
+
+export const signUpFailed = (error) =>
+  createAction(UserActionType.SIGN_UP_FAILED, error);
 
 export const signInFailed = (error) =>
   createAction(UserActionType.SIGN_IN_FAILED, error);
