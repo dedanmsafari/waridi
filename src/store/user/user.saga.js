@@ -12,6 +12,8 @@ import {
   signInSuccess,
   signUpSuccess,
   signUpFailed,
+  signOutUserSuccess,
+  signOutUserFailed,
 } from "./user.actions";
 import { UserActionType } from "./user.actionTypes";
 
@@ -27,9 +29,17 @@ export function* signInAuthWithGoogle() {
 export function* signOutUserAsync() {
   try {
     const { user } = yield call(signOutUser);
+    yield put(signOutUserSuccess(user));
+  } catch (error) {
+    yield put(signOutUserFailed(error));
+  }
+}
+
+export function* signOutUserAsyncSuccess(user) {
+  try {
     yield call(userDocCreationfromAuthAsync, user);
   } catch (error) {
-    yield put(signInFailed(error));
+    yield put(signOutUserFailed(error));
   }
 }
 
@@ -126,6 +136,9 @@ export function* onEmailandPasswordSignUp() {
 export function* onUserSignOutStart() {
   yield takeLatest(UserActionType.SIGN_OUT_START, signOutUserAsync);
 }
+export function* onUserSignOutSuccess() {
+  yield takeLatest(UserActionType.SIGN_OUT_SUCCESS, signOutUserAsyncSuccess);
+}
 
 export function* onUserSignUp() {
   yield takeLatest(UserActionType.SIGN_UP_SUCCESS, onSignInAfterSignUp);
@@ -139,5 +152,6 @@ export function* userSaga() {
     call(onEmailandPasswordSignUp),
     call(onUserSignOutStart),
     call(onUserSignUp),
+    call(onUserSignOutSuccess),
   ]);
 }
