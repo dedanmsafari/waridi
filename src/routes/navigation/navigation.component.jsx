@@ -20,7 +20,7 @@ import {
   selectCartTotal,
   selectOpenDropDown,
 } from "../../store/cart/cart.selectors";
-import { signOutUserFromApp } from "../../store/user/user.actions";
+import { signOutUserStart } from "../../store/user/user.actions";
 
 export default function Navigation() {
   const currentUser = useSelector(selectCurrentUser);
@@ -28,9 +28,8 @@ export default function Navigation() {
   const cartTotal = useSelector(selectCartTotal);
   const dispatch = useDispatch();
 
-  const handleSignOut = () => {
-    dispatch(signOutUserFromApp());
-  };
+  const handleSignOut = () => dispatch(signOutUserStart());
+
   const toggleDropdown = () => dispatch(setOpenDropdown());
   return (
     <>
