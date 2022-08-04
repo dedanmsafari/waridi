@@ -7,15 +7,14 @@ export const setCurrentUser = (user) =>
 export const signInGoogleStart = () =>
   createAction(UserActionType.SIGN_IN_GOOGLE);
 
-export const signOutUserStart = () => {
+export const signOutUserStart = () =>
   createAction(UserActionType.SIGN_OUT_START);
-};
-export const signOutUserSuccess = (user) => {
-  createAction(UserActionType.SIGN_OUT_SUCCESS, user);
-};
-export const signOutUserFailed = (error) => {
+
+export const signOutUserSuccess = () =>
+  createAction(UserActionType.SIGN_OUT_SUCCESS);
+
+export const signOutUserFailed = (error) =>
   createAction(UserActionType.SIGN_OUT_FAILED, error);
-};
 
 export const signInWithEmailAndPasswordStart = (email, password) =>
   createAction(UserActionType.SIGN_IN_EMAIL_PASSWORD, { email, password });
