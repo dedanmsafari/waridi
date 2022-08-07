@@ -3,12 +3,12 @@ import { useParams } from "react-router-dom";
 import ProductCard from "../../components/product-card/product-card.component";
 import { useSelector } from "react-redux";
 import { Spinner } from "../../components/spinner/spinner.component";
-import "./category.styles.scss";
 import {
   selectCategoriesIsLoading,
   selectCategoriesMap,
 } from "../../store/categories/categories.selectors";
 
+import "./category.styles.scss";
 const Category = () => {
   const { category } = useParams();
 
