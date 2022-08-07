@@ -14,6 +14,7 @@ export const PaymentForm = () => {
       return;
     }
   };
+
   return (
     <PaymentFormContainer>
       <FormContainer>
