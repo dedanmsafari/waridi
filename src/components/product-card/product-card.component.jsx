@@ -1,7 +1,9 @@
 import React from "react";
 import Button, { BUTTON_TYPE_CLASSES } from "../button/button.component";
+
 import { addItemToCart } from "../../store/cart/cart.actions";
 import { useDispatch } from "react-redux";
+
 import "./product-card.styles.scss";
 
 const ProductCard = ({ product }) => {
