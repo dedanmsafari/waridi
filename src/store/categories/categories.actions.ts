@@ -1,18 +1,40 @@
-import { createAction } from "../../utils/reducer/reducer.utils";
-import { CategoryTypes } from "./categories.actionTypes";
+import {
+  createAction,
+  Action,
+  ActionWithPayload,
+} from "../../utils/reducer/reducer.utils";
+import { CategoryTypes, Category } from "./categories.actionTypes";
 import { getCategoriesAndDocuments } from "../../utils/firebase/firebase.utils";
 
+export type FetchCategoriesStart = Action<CategoryTypes.FETCH_CATEGORIES_START>;
+
+export type FetchCategoriesSuccess = ActionWithPayload<
+  CategoryTypes.FETCH_CATEGORIES_SUCCESS,
+  Category[]
+>;
+
+export type FetchCategoriesFailure = ActionWithPayload<
+  CategoryTypes.FETCH_CATEGORIES_FAILURE,
+  Error
+>;
+
+export type CategoryActions =
+  | FetchCategoriesStart
+  | FetchCategoriesSuccess
+  | FetchCategoriesFailure;
 //fetch categories start
 
-export const fetchCategoriesStart = () =>
+export const fetchCategoriesStart = (): FetchCategoriesStart =>
   createAction(CategoryTypes.FETCH_CATEGORIES_START);
 //fetch categories success
 
-export const fetchCategoriesSuccess = (categoriesArray) =>
+export const fetchCategoriesSuccess = (
+  categoriesArray: Category[]
+): FetchCategoriesSuccess =>
   createAction(CategoryTypes.FETCH_CATEGORIES_SUCCESS, categoriesArray);
 //fetch categories failure
 
-export const fetchCategoriesFailure = (error) =>
+export const fetchCategoriesFailure = (error: Error): FetchCategoriesFailure =>
   createAction(CategoryTypes.FETCH_CATEGORIES_FAILURE, error);
 
 //Async thunk function
