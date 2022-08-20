@@ -4,7 +4,6 @@ import {
   ActionWithPayload,
 } from "../../utils/reducer/reducer.utils";
 import { CategoryTypes, Category } from "./categories.actionTypes";
-import { getCategoriesAndDocuments } from "../../utils/firebase/firebase.utils";
 
 export type FetchCategoriesStart = Action<CategoryTypes.FETCH_CATEGORIES_START>;
 
