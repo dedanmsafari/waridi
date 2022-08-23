@@ -45,7 +45,7 @@ export const cartReducer = (state = INITIAL_STATE, action = {}) => {
         (item) => item.id === payload.id
       );
 
-      if (includedItem.quantity === 1) {
+      if (includedItem && includedItem.quantity === 1) {
         const savedProducts = state.cartItems.filter(
           (cartItem) => cartItem !== includedItem
         );
