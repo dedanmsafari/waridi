@@ -2,6 +2,7 @@ import {
   createAction,
   Action,
   ActionWithPayload,
+  withMatcher,
 } from "../../utils/reducer/reducer.utils";
 import { CategoryTypes, Category } from "./categories.actionTypes";
 
@@ -17,24 +18,23 @@ export type FetchCategoriesFailure = ActionWithPayload<
   Error
 >;
 
-export type CategoryActions =
-  | FetchCategoriesStart
-  | FetchCategoriesSuccess
-  | FetchCategoriesFailure;
 //fetch categories start
 
-export const fetchCategoriesStart = (): FetchCategoriesStart =>
-  createAction(CategoryTypes.FETCH_CATEGORIES_START);
+export const fetchCategoriesStart = withMatcher(
+  (): FetchCategoriesStart => createAction(CategoryTypes.FETCH_CATEGORIES_START)
+);
 //fetch categories success
 
-export const fetchCategoriesSuccess = (
-  categoriesArray: Category[]
-): FetchCategoriesSuccess =>
-  createAction(CategoryTypes.FETCH_CATEGORIES_SUCCESS, categoriesArray);
+export const fetchCategoriesSuccess = withMatcher(
+  (categoriesArray: Category[]): FetchCategoriesSuccess =>
+    createAction(CategoryTypes.FETCH_CATEGORIES_SUCCESS, categoriesArray)
+);
 //fetch categories failure
 
-export const fetchCategoriesFailure = (error: Error): FetchCategoriesFailure =>
-  createAction(CategoryTypes.FETCH_CATEGORIES_FAILURE, error);
+export const fetchCategoriesFailure = withMatcher(
+  (error: Error): FetchCategoriesFailure =>
+    createAction(CategoryTypes.FETCH_CATEGORIES_FAILURE, error)
+);
 
 //Async thunk function
 
