@@ -15,19 +15,17 @@ export const selectOpenDropDown = createSelector(
 export const selectTotalCost = createSelector(
   [selectCartItems],
   (cartItems) => {
-    const getTotal = (cartCount, cartItem) => {
+    return cartItems.reduce((cartCount, cartItem) => {
       return cartCount + cartItem.quantity * cartItem.price;
-    };
-    return cartItems.reduce(getTotal, 0);
+    }, 0);
   }
 );
 
 export const selectCartTotal = createSelector(
   [selectCartItems],
   (cartItems) => {
-    const getItems = (cartCount, cartItem) => {
+    return cartItems.reduce((cartCount, cartItem) => {
       return cartCount + cartItem.quantity;
-    };
-    return cartItems.reduce(getItems, 0);
+    }, 0);
   }
 );
