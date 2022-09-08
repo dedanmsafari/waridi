@@ -20,7 +20,7 @@ import {
   selectCartTotal,
   selectOpenDropDown,
 } from "../../store/cart/cart.selectors";
-import { signOutUserStart } from "../../store/user/user.actions.js";
+import { signOutUserStart } from "../../store/user/user.actions";
 
 export default function Navigation() {
   const dispatch = useDispatch();
