@@ -1,8 +1,19 @@
 import { CategoryItem } from "../categories/categories.actionTypes";
-import { createAction, withMatcher } from "../../utils/reducer/reducer.utils";
-import { CartTypes, CartItem } from "./cart.actionTypes";
 
-const addCartItem = (cartItems, productToAdd) => {
+import {
+  createAction,
+  withMatcher,
+  Action,
+  ActionWithPayload,
+} from "../../utils/reducer/reducer.utils";
+
+import { CartTypes, CartItem } from "./cart.actionTypes";
+import { create } from "domain";
+
+const addCartItem = (
+  cartItems: CartItem[],
+  productToAdd: CategoryItem
+): CartItem[] => {
   const existingItem = cartItems.find((item) => item.id === productToAdd.id);
 
   if (existingItem) {
@@ -19,14 +30,20 @@ const addCartItem = (cartItems, productToAdd) => {
   }
 };
 
-const removeCartItem = (cartItems, cartItemToRemove) => {
+const removeCartItem = (
+  cartItems: CartItem[],
+  cartItemToRemove: CartItem
+): CartItem[] => {
   const remainingProducts = cartItems.filter(
     (cartItem) => cartItem !== cartItemToRemove
   );
   return remainingProducts;
 };
 
-const decreaseCartItem = (cartItems, cartItemToReduce) => {
+const decreaseCartItem = (
+  cartItems: CartItem[],
+  cartItemToReduce: CartItem
+): CartItem[] => {
   const includedItem = cartItems.find(
     (item) => item.id === cartItemToReduce.id
   );
@@ -49,18 +66,44 @@ const decreaseCartItem = (cartItems, cartItemToReduce) => {
   return decreasedCart;
 };
 
-export const addItemToCart = (cartItems, productToAdd) => {
+export type setIsCartOpen = Action<CartTypes.OPEN_CART_DROPDOWN>;
+
+export type setCartItems = ActionWithPayload<
+  CartTypes.SET_CART_ITEMS,
+  CartItem[]
+>;
+
+export const setCartItems = withMatcher(
+  (cartItems: CartItem[]): setCartItems =>
+    createAction(CartTypes.SET_CART_ITEMS, cartItems)
+);
+
+export const addItemToCart = (
+  cartItems: CartItem[],
+  productToAdd: CategoryItem
+) => {
   const newCartItems = addCartItem(cartItems, productToAdd);
 
-  return createAction(CartTypes.SET_CART_ITEMS, newCartItems);
+  return setCartItems(newCartItems);
 };
-export const removeFromCart = (cartItems, cartItemToRemove) => {
+
+export const removeFromCart = (
+  cartItems: CartItem[],
+  cartItemToRemove: CartItem
+) => {
   const newCartItems = removeCartItem(cartItems, cartItemToRemove);
 
-  return createAction(CartTypes.SET_CART_ITEMS, newCartItems);
+  return setCartItems(newCartItems);
 };
-export const decreaseFromCart = (cartItems, cartItemtoReduce) => {
+
+export const decreaseFromCart = (
+  cartItems: CartItem[],
+  cartItemtoReduce: CartItem
+) => {
   const newCartItems = decreaseCartItem(cartItems, cartItemtoReduce);
-  return createAction(CartTypes.SET_CART_ITEMS, newCartItems);
+  return setCartItems(newCartItems);
 };
-export const setOpenDropdown = () => createAction(CartTypes.OPEN_CART_DROPDOWN);
+
+export const setOpenDropdown = withMatcher(
+  (): setIsCartOpen => createAction(CartTypes.OPEN_CART_DROPDOWN)
+);
