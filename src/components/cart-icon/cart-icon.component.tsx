@@ -1,6 +1,6 @@
 import React from "react";
 
-import { CartContainer, ItemCount, ShoppingIcon } from "./cart-icon.styles.js";
+import { CartContainer, ItemCount, ShoppingIcon } from "./cart-icon.styles";
 
 export type CartIconProps = {
   cartTotal: number;
