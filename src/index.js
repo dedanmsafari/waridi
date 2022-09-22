@@ -6,8 +6,8 @@ import { PersistGate } from "redux-persist/integration/react";
 
 import { Elements } from "@stripe/react-stripe-js";
 import { stripePromise } from "./utils/stripe/stripe";
-import "./index.css";
 
+import { GlobalStyles } from "./global.styles";
 import App from "./App";
 
 import reportWebVitals from "./reportWebVitals";
@@ -22,6 +22,7 @@ root.render(
       <PersistGate loading={null} persistor={persistor}>
         <BrowserRouter>
           <Elements stripe={stripePromise}>
+            <GlobalStyles />
             <App />
           </Elements>
         </BrowserRouter>
