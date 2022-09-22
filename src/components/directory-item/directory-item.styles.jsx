@@ -19,6 +19,9 @@ export const ItemBody = styled.div`
   background-color: white;
   opacity: 0.7;
   position: absolute;
+  @media screen and (max-width: 800px) {
+    padding: 10px;
+  }
 `;
 
 export const Title = styled.h2`
@@ -63,5 +66,9 @@ export const DirectoryContainer = styled.div`
 
   &:last-child {
     margin-left: 7.5px;
+  }
+
+  @media screen and (max-width: 800px) {
+    height: 200px;
   }
 `;
