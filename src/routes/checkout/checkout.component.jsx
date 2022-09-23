@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { useSelector } from "react-redux";
 
 import CheckoutItem from "../../components/checkout-item/checkout-item.component";
@@ -11,7 +11,7 @@ import {
 
 import "./checkout.styles.scss";
 
-const Checkout = () => {
+const Checkout = memo(() => {
   const cartItems = useSelector(selectCartItems);
   const totalCost = useSelector(selectTotalCost);
   return (
@@ -41,6 +41,6 @@ const Checkout = () => {
       <PaymentForm />
     </div>
   );
-};
+});
 
 export default Checkout;
