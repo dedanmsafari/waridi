@@ -67,13 +67,13 @@ const decreaseCartItem = (
 
 export type setIsCartOpen = Action<CartTypes.OPEN_CART_DROPDOWN>;
 
-export type setCartItems = ActionWithPayload<
+export type SetCartItems = ActionWithPayload<
   CartTypes.SET_CART_ITEMS,
   CartItem[]
 >;
 
 export const setCartItems = withMatcher(
-  (cartItems: CartItem[]): setCartItems =>
+  (cartItems: CartItem[]): SetCartItems =>
     createAction(CartTypes.SET_CART_ITEMS, cartItems)
 );
 
