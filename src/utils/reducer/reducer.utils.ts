@@ -1,18 +1,22 @@
 import { AnyAction } from "redux";
 
+//type Definition
 type Matchable<AC extends () => AnyAction> = AC & {
   type: ReturnType<AC>["type"];
   match(action: AnyAction): action is ReturnType<AC>;
 };
 
+//Overload
 export function withMatcher<AC extends () => AnyAction & { type: string }>(
   actionCreator: AC
 ): Matchable<AC>;
 
+//Overload
 export function withMatcher<
   AC extends (...args: any[]) => AnyAction & { type: string }
 >(actionCreator: AC): Matchable<AC>;
 
+//Actual Implementation
 export function withMatcher(actionCreator: Function) {
   const type = actionCreator().type;
 
