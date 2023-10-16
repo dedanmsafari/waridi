@@ -17,7 +17,9 @@ type CategoryParameter = {
 };
 
 const Category = () => {
-  const { category } = useParams<CategoryParameter>() as CategoryParameter;
+  const { category } = useParams<
+    keyof CategoryParameter
+  >() as CategoryParameter;
 
   const categoriesMap = useSelector(selectCategoriesMap);
   const isLoading = useSelector(selectCategoriesIsLoading);
