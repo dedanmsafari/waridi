@@ -33,21 +33,18 @@ export type ActionWithPayload<T, P> = {
   payload: P;
 };
 
-export type Action<T> = {
+export type Action<T = string> = {
   type: T;
 };
 
-export function createAction<T extends string, P>(
+export function createAction<T, P>(
   type: T,
   payload: P
 ): ActionWithPayload<T, P>;
 
-export function createAction<T extends string>(
-  type: T,
-  payload: void
-): Action<T>;
+export function createAction<T>(type: T, payload: void): Action<T>;
 
-export function createAction<T extends string, P>(type: T, payload: P) {
+export function createAction<T, P>(type: T, payload: P) {
   return {
     type,
     payload,
